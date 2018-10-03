@@ -24,18 +24,23 @@ let result = "";
 let loader = new PIXI.loaders.Loader();
 
 PIXI.ticker.shared.start();
+
+setDefaultValues();
+
 $(function () {
     $('#okFont').on('click', function () {
         if ($('#font').val() === "") {
             return alert("No font!!!!")
         }
-
+        $('#okFont').text("Reload")
         name = $('#font').val();
         // let xml = $('#fontXML').val();
         // let png = $('#fontPNG').val();
         ext = $("#extension").val();
+        loader.destroy();
         loader.add("png", `font/${name}.png`).add("xml", `font/${name}.xml`);
         loader.load(font)
+        
     });
 
     $('#okText').on('click', function () {
@@ -54,6 +59,7 @@ $(function () {
         text2.font["size"] = $('#fontSize').val() * 1;
         text2.text = "";
         text2.text = numberWithSpaces($('#from').val());
+        c
         text3.font["size"] = $('#fontSize').val() * 1;
         text3.text = "";
         text3.text = decimalPlaces($('#text').val());
@@ -114,6 +120,7 @@ $(function () {
 });
 
 function font() {
+    
     $("#okFS").removeAttr("disabled");
     $("#okColor").removeAttr("disabled");
     $("#okText").removeAttr("disabled");
@@ -132,7 +139,6 @@ function font() {
     $("#clColor").removeAttr("disabled");
 
     $("#saveDefault").removeAttr("disabled");
-    $("#clearDefault").removeAttr("disabled");
 
     $("#okFont").addClass("btn-success");
     text = new PIXI.extras.BitmapText(numberWithSpaces($('#text').val(), false), {
@@ -255,6 +261,7 @@ function saveDefault() {
 
 function clearDefault() {
     defaultSettings.clear();
+    location.reload();
 }
 
 function saveFont() {
@@ -269,7 +276,7 @@ function saveSize() {
     defaultSettings.setItem('defaultSize', $("#fontSize").val())
 }
 
-function clearSize(){
+function clearSize() {
     defaultSettings.removeItem('defaultSize');
 }
 
@@ -277,7 +284,7 @@ function saveColor() {
     defaultSettings.setItem('defaultColor', $("#color").val())
 }
 
-function clearColor(){
+function clearColor() {
     defaultSettings.removeItem('defaultColor');
 }
 
@@ -285,6 +292,15 @@ function saveText() {
     defaultSettings.setItem('defaultText', $("#text").val())
 }
 
-function clearText(){
+function clearText() {
     defaultSettings.removeItem('defaultText');
+}
+
+function setDefaultValues() {
+    $("#font").val(defaultSettings.getItem("defaultName"));
+    defaultSettings.getItem("defaultSize") && $("#fontSize").val(defaultSettings.getItem("defaultSize"));
+    defaultSettings.getItem("defaultColor") && $("#color").val(defaultSettings.getItem("defaultColor"));
+    defaultSettings.getItem("defaultText") && $("#text").val(defaultSettings.getItem("defaultText"));
+    defaultSize = $("#fontSize").val();
+    pixi.renderer.backgroundColor = parseInt($("#color").val().replace("#", "0x"));
 }
