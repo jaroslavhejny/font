@@ -3,23 +3,25 @@ let pixi = new PIXI.Application({
     height: 450,
     antialias: true,
     clearBeforeRender: true,
-    backgroundColor: 0x000000
+    backgroundColor: 0x808080
 })
 
 let text;
 
-let textCounte;
+let defaultSettings = window.localStorage;
 
+let textCounte;
 
 document.body.appendChild(pixi.view);
 
-
 let name = "";
 let bgImg = "";
+let ext = "";
 let sampleText = "";
 let textToShow = "";
 let defaultSize = $("#fontSize").val();
-let result = ""
+let result = "";
+let loader = new PIXI.loaders.Loader();
 
 PIXI.ticker.shared.start();
 $(function () {
@@ -27,11 +29,12 @@ $(function () {
         if ($('#font').val() === "") {
             return alert("No font!!!!")
         }
-        let loader = new PIXI.loaders.Loader();
+
         name = $('#font').val();
         // let xml = $('#fontXML').val();
         // let png = $('#fontPNG').val();
-        loader.add(`font/${name}.png`).add(`font/${name}.xml`);
+        ext = $("#extension").val();
+        loader.add("png", `font/${name}.png`).add("xml", `font/${name}.xml`);
         loader.load(font)
     });
 
@@ -88,15 +91,50 @@ $(function () {
 
         })
     })
-});
 
+    $("#defFont").on('click', saveFont);
+
+    $("#clFont").on('click', clearFont);
+
+    $("#defSize").on('click', saveSize);
+
+    $("#clSize").on('click', clearSize);
+
+    $("#defColor").on('click', saveColor);
+
+    $("#clColor").on('click', clearColor);
+
+    $("#defText").on('click', saveText);
+
+    $("#clText").on('click', clearText);
+
+    $("#saveDefault").on('click', saveDefault);
+
+    $("#clearDefault").on('click', clearDefault);
+});
 
 function font() {
     $("#okFS").removeAttr("disabled");
     $("#okColor").removeAttr("disabled");
     $("#okText").removeAttr("disabled");
     $("#start").removeAttr("disabled");
-    $("#okFont").addClass("btn-success")
+
+    $("#defFont").removeAttr("disabled");
+    $("#clFont").removeAttr("disabled");
+
+    $("#defSize").removeAttr("disabled");
+    $("#clSize").removeAttr("disabled");
+
+    $("#defText").removeAttr("disabled");
+    $("#clText").removeAttr("disabled");
+
+    $("#defColor").removeAttr("disabled");
+    $("#clColor").removeAttr("disabled");
+
+    $("#saveDefault").removeAttr("disabled");
+    $("#clearDefault").removeAttr("disabled");
+
+    $("#okFont").addClass("btn-success");
     text = new PIXI.extras.BitmapText(numberWithSpaces($('#text').val(), false), {
         font: `${defaultSize}px ${name}`
     });
@@ -138,7 +176,6 @@ function font() {
     pixi.stage.addChild(text4);
 }
 
-
 function numberWithSpaces(number, round = true) {
     if (round) {
         return Math.round(number).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
@@ -149,21 +186,21 @@ function numberWithSpaces(number, round = true) {
 }
 
 function decimalPlaces(text) {
-    let teext = text;
-    switch (teext.length) {
+    //let teext = text;
+    switch (text.length) {
         case 1:
-            teext = "00" + teext
+            text = "00" + text
             break;
         case 2:
-            teext = "0" + teext
+            text = "0" + text
             break;
         default:
-            teext
+            text
     }
 
 
-    let a = teext.substring(0, teext.length - 2)
-    let b = teext.substring(teext.length - 2, teext.length);
+    let a = text.substring(0, text.length - 2)
+    let b = text.substring(text.length - 2, text.length);
 
     return numberWithSpaces(a) + changeToSmall(b);
 }
@@ -207,4 +244,47 @@ function change(a) {
             return "j"
             break;
     }
+}
+
+function saveDefault() {
+    defaultSettings.setItem('defaultName', $("#font").val());
+    defaultSettings.setItem('defaultSize', $("#fontSize").val());
+    defaultSettings.setItem('defaultColor', $("#color").val());
+    defaultSettings.setItem('defaultText', $("#text").val());
+}
+
+function clearDefault() {
+    defaultSettings.clear();
+}
+
+function saveFont() {
+    defaultSettings.setItem('defaultName', $("#font").val())
+}
+
+function clearFont() {
+    defaultSettings.removeItem('defaultName');
+}
+
+function saveSize() {
+    defaultSettings.setItem('defaultSize', $("#fontSize").val())
+}
+
+function clearSize(){
+    defaultSettings.removeItem('defaultSize');
+}
+
+function saveColor() {
+    defaultSettings.setItem('defaultColor', $("#color").val())
+}
+
+function clearColor(){
+    defaultSettings.removeItem('defaultColor');
+}
+
+function saveText() {
+    defaultSettings.setItem('defaultText', $("#text").val())
+}
+
+function clearText(){
+    defaultSettings.removeItem('defaultText');
 }

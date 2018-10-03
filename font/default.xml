@@ -10,7 +10,7 @@
 		<char id="50" x="142" y="219" width="43" height="72" xoffset="0" yoffset="7" xadvance="44" /><!-- 2 -->
 		<char id="51" x="143" y="74" width="44" height="73" xoffset="0" yoffset="7" xadvance="45" /><!-- 3 -->
 		<char id="52" x="49" y="142" width="47" height="70" xoffset="0" yoffset="9" xadvance="48" /><!-- 4 -->
-		<char id="53" x="151" y="0" width="43" height="71" xoffset="0" yoffset="9" xadvance="44" /><!-- 5 -->
+		<char id="53" x="151" y="0" width="43" height="71" xoffset="0" yoffset="9" xadvance="48" /><!-- 5 -->
 		<char id="54" x="58" y="0" width="46" height="73" xoffset="0" yoffset="7" xadvance="47" /><!-- 6 -->
 		<char id="55" x="142" y="148" width="44" height="70" xoffset="0" yoffset="9" xadvance="45" /><!-- 7 -->
 		<char id="56" x="105" y="0" width="45" height="73" xoffset="0" yoffset="7" xadvance="46" /><!-- 8 -->
