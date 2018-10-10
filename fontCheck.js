@@ -22,7 +22,7 @@ let textToShow = "";
 let defaultSize = $("#fontSize").val();
 let result = "";
 let loader = new PIXI.loaders.Loader();
-let number = 0;
+let number = Math.floor(Math.random() * 10000);
 
 PIXI.ticker.shared.start();
 
@@ -43,7 +43,7 @@ $(function () {
         loader.destroy(true);
         loader.add("png", `font/${name}.png?${number}`).add("xml", `font/${name}.xml?${number}`);
         loader.load(font);
-        number++;
+        number = Math.floor(Math.random() * 1000);
     });
 
     $('#okText').on('click', function () {
