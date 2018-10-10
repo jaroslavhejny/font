@@ -22,6 +22,7 @@ let textToShow = "";
 let defaultSize = $("#fontSize").val();
 let result = "";
 let loader = new PIXI.loaders.Loader();
+let number = 0;
 
 PIXI.ticker.shared.start();
 
@@ -32,15 +33,17 @@ $(function () {
         if ($('#font').val() === "") {
             return alert("No font!!!!")
         }
+        loader.reset();
         $('#okFont').text("Reload")
         name = $('#font').val();
         // let xml = $('#fontXML').val();
         // let png = $('#fontPNG').val();
-        ext = $("#extension").val();
-        loader.destroy();
-        loader.add("png", `font/${name}.png`).add("xml", `font/${name}.xml`);
-        loader.load(font)
         
+        ext = $("#extension").val();
+        loader.destroy(true);
+        loader.add("png", `font/${name}.png?${number}`).add("xml", `font/${name}.xml?${number}`);
+        loader.load(font);
+        number++;
     });
 
     $('#okText').on('click', function () {
@@ -120,7 +123,7 @@ $(function () {
 });
 
 function font() {
-    
+
     $("#okFS").removeAttr("disabled");
     $("#okColor").removeAttr("disabled");
     $("#okText").removeAttr("disabled");
