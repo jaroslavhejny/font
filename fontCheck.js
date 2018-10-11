@@ -62,7 +62,6 @@ $(function () {
         text2.font["size"] = $('#fontSize').val() * 1;
         text2.text = "";
         text2.text = numberWithSpaces($('#from').val());
-        c
         text3.font["size"] = $('#fontSize').val() * 1;
         text3.text = "";
         text3.text = decimalPlaces($('#text').val());
